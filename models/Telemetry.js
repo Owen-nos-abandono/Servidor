@@ -9,12 +9,17 @@ const telemetrySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  timestamp: {
+  timestamp_esp32: {
     type: Date,
     required: true
+  },
+  timestamp_server: {
+    type: Date,
+    required: true,
+    default: Date.now
   }
 }, {
-  timestamps: true  // crea automáticamente createdAt y updatedAt
+  timestamps: false // desactiva createdAt y updatedAt porque ya tienes tus propios timestamps
 });
 
 module.exports = mongoose.model('Telemetry', telemetrySchema);

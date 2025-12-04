@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Telemetry = require('./models/Telemetry');
+const Telemetry = require('./models/telemetry');
 
 const app = express();
 
@@ -78,12 +78,24 @@ app.get('/api/telemetry/count', async (req, res) => {
   }
 });
 
+app.get('/api/update', (req, res) => {
+  const min = 4;
+  const max = 60;
+
+  const randomSeconds = Math.floor(Math.random() * (max - min + 1)) + min;
+
+  res.status(200).json({
+    update_interval: randomSeconds,
+    message: "Intervalo generado correctamente"
+  });
+});
+
 
 // Página raíz pequeña de prueba
 app.get('/', (req, res) => {
   res.send(`
     <h1>ESP32 + DHT22 Telemetría</h1>
-    <p><strong>Estado:</strong> API funcionando ✔️</p>
+    <p><strong>Estado:</strong> API funcionando ✔</p>
     <p><strong>POST:</strong> /api/telemetry</p>
     <p><strong>GET:</strong> /api/telemetry</p>
     <p><strong>Total registros:</strong> <span id="count">cargando...</span></p>
